@@ -7,154 +7,20 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userAsync = ref.watch(fetchUserProvider);
-    ref
-        .watch(fetchUserProvider)
-        .map(data: (data) {}, error: (error) {}, loading: (loading) {});
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA), // خلفية هادئة مريحة للعين
-      appBar: AppBar(
-        title: const Text(
-          'User Profile',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.indigo,
-        foregroundColor: Colors.white,
-      ),
-      body: userAsync.when(
-        data: (user) => SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // 1. الجزء العلوي (صورة رمزية واسم)
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.indigo.shade100,
-                      child: Text(
-                        user.name[0], // أول حرف من الاسم
-                        style: const TextStyle(
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.indigo,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Text(
-                      user.name,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '@${user.userName}',
-                      style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // 2. كارت معلومات التواصل
-              _buildSectionTitle('Contact Information'),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    _buildInfoTile(Icons.email_outlined, 'Email', user.email),
-                    _buildInfoTile(
-                      Icons.phone_android_outlined,
-                      'Phone',
-                      user.phone,
-                    ),
-                    _buildInfoTile(
-                      Icons.language_outlined,
-                      'Website',
-                      user.webSite,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // 3. كارت العنوان والشركة
-              _buildSectionTitle('Business & Location'),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    _buildInfoTile(
-                      Icons.business_center_outlined,
-                      'Company',
-                      user.company.name,
-                    ),
-                    _buildInfoTile(
-                      Icons.location_on_outlined,
-                      'City',
-                      user.address.city,
-                    ),
-                    _buildInfoTile(
-                      Icons.map_outlined,
-                      'Street',
-                      user.address.street,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      body: ref
+          .watch(streamProvider)
+          .when(
+            data: (data) {
+              return Center(child: Text(data.toString()));
+            },
+            error: (error, stackTrace) {
+              return Text(error.toString());
+            },
+            loading: () {
+              return const CircularProgressIndicator();
+            },
           ),
-        ),
-        error: (err, stack) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.error_outline, color: Colors.red, size: 60),
-              const SizedBox(height: 10),
-              Text('Error: $err', textAlign: TextAlign.center),
-              ElevatedButton(
-                onPressed: () => ref.refresh(fetchUserProvider),
-                child: const Text('Try Again'),
-              ),
-            ],
-          ),
-        ),
-        loading: () => const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 10),
-              Text('Fetching data via Proxy...'),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

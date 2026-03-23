@@ -33,3 +33,6 @@ final fetchUserProvider = FutureProvider((ref) async {
   final user = ref.read(userProviderRepositry);
   return user.featchUserData();
 });
+final streamProvider = StreamProvider((ref) async* {
+  yield [4];
+});
