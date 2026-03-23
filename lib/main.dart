@@ -24,3 +24,6 @@ class MyApp extends StatelessWidget {
 final userProvider = StateNotifierProvider<UserNotifier, User>((ref) {
   return UserNotifier();
 });
+final userChangeNotifierProvider = ChangeNotifierProvider((ref) {
+  return UserNotifierChange();
+});

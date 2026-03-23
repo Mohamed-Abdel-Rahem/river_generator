@@ -5,20 +5,20 @@ import 'package:riv_gen/main.dart';
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
   void onSubmittedName(String value, WidgetRef ref) {
-    ref.read(userProvider.notifier).updateName(value);
+    ref.read(userChangeNotifierProvider).updateName(value);
   }
 
   void onSubmittedAge(String value, WidgetRef ref) {
-    ref.read(userProvider.notifier).updateAge(int.parse(value));
+    ref.read(userChangeNotifierProvider).updateAge(int.parse(value));
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider.select((value) => value.age));
+    final user = ref.watch(userChangeNotifierProvider).user;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          user.toString(),
+          user.name,
           style: TextStyle(
             fontSize: 15,
             color: Colors.black87,
@@ -54,7 +54,7 @@ class HomePage extends ConsumerWidget {
               ),
             ),
             Text(
-              'The Name of Provider is ${user.toString()} and the age is ${user.toString()}',
+              'The Name of Provider is ${user.name} and the age is ${user.age.toString()}',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,

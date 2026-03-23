@@ -51,3 +51,16 @@ class UserNotifier extends StateNotifier<User> {
     state = state.copyWith(age: age);
   }
 }
+
+class UserNotifierChange extends ChangeNotifier {
+  User user = const User(name: 'Non', age: 0);
+  void updateName(String name) {
+    user = user.copyWith(name: name);
+    notifyListeners();
+  }
+
+  void updateAge(int age) {
+    user = user.copyWith(age: age);
+    notifyListeners();
+  }
+}
