@@ -139,8 +139,8 @@ class Company {
 final userProviderRepositry = Provider((ref) => UserRepository());
 
 class UserRepository {
-  Future<UserProfile> featchUserData() async {
-    const targetUrl = 'https://jsonplaceholder.typicode.com/users/4';
+  Future<UserProfile> featchUserData(String input) async {
+    var targetUrl = 'https://jsonplaceholder.typicode.com/users/$input';
     // استخدم بروكسي تاني أسرع شوية ومخصص للمطورين
     final proxyUrl =
         'https://api.allorigins.win/get?url=${Uri.encodeComponent(targetUrl)}';

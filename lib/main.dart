@@ -29,9 +29,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final fetchUserProvider = FutureProvider((ref) async {
-  final user = ref.read(userProviderRepositry);
-  return user.featchUserData();
+final fetchUserProvider = FutureProvider.family((ref, String input) async {
+  final userRepository = ref.watch(userProviderRepositry);
+  return userRepository.featchUserData(input);
 });
 final streamProvider = StreamProvider((ref) async* {
   yield [4];
