@@ -14,11 +14,11 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(userProvider.select((value) => value.age));
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          user.name,
+          user.toString(),
           style: TextStyle(
             fontSize: 15,
             color: Colors.black87,
@@ -54,7 +54,7 @@ class HomePage extends ConsumerWidget {
               ),
             ),
             Text(
-              'The Name of Provider is ${user.name} and the age is ${user.age.toString()}',
+              'The Name of Provider is ${user.toString()} and the age is ${user.toString()}',
               style: TextStyle(
                 fontSize: 15,
                 color: Colors.black87,
