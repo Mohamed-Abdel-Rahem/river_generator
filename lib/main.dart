@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final fetchUserProvider = FutureProvider.family((ref, String input) async {
+final fetchUserProvider = FutureProvider.family.autoDispose((
+  ref,
+  String input,
+) async {
   final userRepository = ref.watch(userProviderRepositry);
   return userRepository.featchUserData(input);
 });
