@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riv_gen/cart.dart';
+
 import 'package:riv_gen/cart_page.dart';
-import 'package:riv_gen/homePage.dart';
+
 import 'package:riv_gen/logger_riverpod.dart';
 import 'package:riv_gen/user_two.dart';
 import 'dart:io';
