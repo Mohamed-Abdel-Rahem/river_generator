@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riv_gen/homePage.dart';
+import 'package:riv_gen/logger_riverpod.dart';
 import 'package:riv_gen/user_two.dart';
 import 'dart:io';
 
@@ -16,7 +17,7 @@ class MyHttpOverrides extends HttpOverrides {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(ProviderScope(observers: [LoggerRiverPod()], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,10 +30,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final fetchUserProvider = FutureProvider.family.autoDispose((
-  ref,
-  String input,
-) async {
+final fetchUserProvider = FutureProvider.family((ref, String input) async {
   final userRepository = ref.watch(userProviderRepositry);
   return userRepository.featchUserData(input);
 });
