@@ -1,7 +1,7 @@
 import 'dart:convert';
-
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+part 'user_two.g.dart';
 
 class UserProfile {
   final String name;
@@ -136,9 +136,14 @@ class Company {
   }
 }
 
-final userProviderRepositry = Provider((ref) => UserRepository());
+@riverpod
+UserRepository userRepositry(Ref ref) {
+  return UserRepository(ref);
+}
 
 class UserRepository {
+  final Ref ref;
+  UserRepository(this.ref);
   Future<UserProfile> featchUserData(String input) async {
     var targetUrl = 'https://jsonplaceholder.typicode.com/users/$input';
     // استخدم بروكسي تاني أسرع شوية ومخصص للمطورين

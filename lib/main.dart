@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riv_gen/cart.dart';
+import 'package:riv_gen/cart_page.dart';
 import 'package:riv_gen/homePage.dart';
 import 'package:riv_gen/logger_riverpod.dart';
 import 'package:riv_gen/user_two.dart';
 import 'dart:io';
+
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+part 'main.g.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -26,14 +31,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return MaterialApp(home: CartPage());
   }
 }
 
-final fetchUserProvider = FutureProvider.family((ref, String input) async {
-  final userRepository = ref.watch(userProviderRepositry);
+@riverpod
+Future<UserProfile> fetchUser(Ref ref, String input) async {
+  final userRepository = ref.watch(userRepositryProvider);
   return userRepository.featchUserData(input);
-});
+}
+
+// final fetchUserProvider = FutureProvider.family((ref, String input) async {
+//   final userRepository = ref.watch(userProviderRepositry);
+//   return userRepository.featchUserData(input);
+// });
 final streamProvider = StreamProvider((ref) async* {
   yield [4];
 });
